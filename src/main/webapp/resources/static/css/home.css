@@ -3,7 +3,7 @@ h1 {
 }
 .appScreen {
     color: gray;
-    background-image: url("static/images/AppBackgraund.png");
+    background-image: url("../images/AppBackgraund.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
