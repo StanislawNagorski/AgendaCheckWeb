@@ -1,0 +1,63 @@
+h1 {
+    color: blue;
+}
+.appScreen {
+    color: gray;
+    background-image: url("../images/AppBackgraund.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 350px;
+    width: 600px;
+    display: block;
+    align-items: center;
+    text-align: center;
+}
+
+.dropZone {
+    padding-top: 50px;
+    width: 100%;
+    /*height: 70%;*/
+    align-items: center;
+}
+
+.dropZoneInfo {
+    font-size: 12px;
+}
+
+.iconTextBox{
+    display: inline-flex;
+    margin: 0.5rem;
+}
+
+#icon {
+
+}
+
+/* BUTTON SECTION */
+
+.ui-section{
+    width: 100%;
+    align-items: center;
+    margin-top: 80px;
+    padding-bottom: 30px;
+
+}
+
+label {
+    color: dimgray;
+    display: block;
+    font: 1rem 'Fira Sans', sans-serif;
+    font-weight: bold;
+}
+
+input,
+label {
+    margin: .4rem 0;
+}
+
+input {
+    width: 80px;
+}
+
+/*TODO: dodaj brak możliwoście zmniejszenia strony*/
