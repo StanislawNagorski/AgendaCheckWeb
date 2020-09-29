@@ -3,7 +3,7 @@ h1 {
 }
 .appScreen {
     color: gray;
-    background-image: url("../images/AppBackgraund.png");
+    background-image: url("static/images/AppBackgraund.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -30,7 +30,7 @@ h1 {
     margin: 0.5rem;
 }
 
-#icon {
+.icon {
 
 }
 
@@ -60,4 +60,6 @@ input {
     width: 80px;
 }
 
-/*TODO: dodaj brak możliwoście zmniejszenia strony*/
+/*TODO:
+    1. tło!!!
+    2.dodaj brak możliwoście zmniejszenia strony*/
