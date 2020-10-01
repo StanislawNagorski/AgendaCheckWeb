@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link href="resources/static/css/home.css" rel="stylesheet"/>
+    <script src="resources/static/js/homeScripts.js"></script>
     <title>eStah</title>
 </head>
 <body>
@@ -15,6 +16,7 @@
             <div class="iconTextBox">
                 <img class="icon" src="resources/static/images/greyIcon.png">
                 <p>1. Gessefa w formacie .xls</p>
+
             </div>
             <br>
             <div class="iconTextBox">
@@ -26,9 +28,8 @@
 
     <div class="ui-section">
         <label for="productivityTarget">Podaj cel produktywności:</label>
-        <input type="number" id="productivityTarget" name="productivityTarget" value="1000"
-               onkeypress="return (charCode !=8 && charCode ==0 ||
-               (charCode >= 48 && charCode <= 57))" >
+        <input id="inputTarget"  type="number" id="productivityTarget" name="productivityTarget" value="1000"
+               onkeypress="return targetCheck()" >
         <button type="button">Generuj raport</button>
     </div>
 
