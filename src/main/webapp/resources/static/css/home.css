@@ -20,14 +20,13 @@ h1 {
     align-items: center;
 }
 
-.dropZoneInfo {
-    font-size: 12px;
-}
-
-.iconTextBox{
-    display: inline-flex;
+.fileUpload {
+    width: 100%;
+    display: block;
     margin: 0.5rem;
 }
+
+
 
 .icon {
 
@@ -40,22 +39,20 @@ h1 {
     align-items: center;
     margin-top: 80px;
     padding-bottom: 30px;
-
 }
 
-label {
+.ui-section {
     color: dimgray;
     display: block;
     font: 1rem 'Fira Sans', sans-serif;
     font-weight: bold;
 }
 
-input,
-label {
+.ui-section  label {
     margin: .4rem 0;
 }
 
-input {
+.ui-section input {
     width: 80px;
 }
 
