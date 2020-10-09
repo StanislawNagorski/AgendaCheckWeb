@@ -10,7 +10,7 @@
 <body>
 
 <div class="appScreen">
-    <form action="home" method="post">
+    <form action="home" method="post" enctype = "multipart/form-data">
         <div class="dropZone">
             <p>Tutaj załaduj pliki pliki</p>
 
@@ -26,11 +26,9 @@
                 <input type="file" id="planQ" name="planQ" accept=".xlsx">
                 <%--                    <img class="icon" src="resources/static/images/greyIcon.png">--%>
             </div>
-
-
         </div>
 
-        <div class="ui-section">
+        <div class="productivityTargetSection">
             <label for="productivityTarget">Podaj cel produktywności:</label>
             <input type="number" id="productivityTarget" name="productivityTarget" value="1000"
                    onkeypress="return targetCheck()">

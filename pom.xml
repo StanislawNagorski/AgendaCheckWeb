@@ -47,6 +47,14 @@
       <version>2.4.0-b180725.0644</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.4</version>
+    </dependency>
+
+
 
     <!--BACKEND!!-->
     <dependency>
@@ -84,6 +92,12 @@
       <groupId>jfree</groupId>
       <artifactId>jfreechart</artifactId>
       <version>1.0.13</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.12</version>
     </dependency>
 
 

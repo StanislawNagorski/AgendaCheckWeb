@@ -19,8 +19,7 @@ https://github.com/StanislawNagorski/AgendaCheck
 - JavaScript
 - Maven
 - JFreeChart
-- JSP and Tomcat
-
+- JSP and 
 # Problems solved by program
 
 - program creates report about how well-fitted schedule is forecasted turnover.

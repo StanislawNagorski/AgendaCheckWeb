@@ -34,25 +34,25 @@ h1 {
 
 /* BUTTON SECTION */
 
-.ui-section{
+.productivityTargetSection{
     width: 100%;
     align-items: center;
     margin-top: 80px;
     padding-bottom: 30px;
 }
 
-.ui-section {
+.productivityTargetSection {
     color: dimgray;
     display: block;
     font: 1rem 'Fira Sans', sans-serif;
     font-weight: bold;
 }
 
-.ui-section  label {
+.productivityTargetSection  label {
     margin: .4rem 0;
 }
 
-.ui-section input {
+.productivityTargetSection input {
     width: 80px;
 }
 
