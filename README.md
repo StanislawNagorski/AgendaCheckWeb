@@ -1,4 +1,6 @@
-[![time tracker](https://wakatime.com/badge/github/StanislawNagorski/AgendaCheck.svg)](https://wakatime.com/badge/github/StanislawNagorski/AgendaCheck)
+Backend and JavaFX version --> [![time tracker](https://wakatime.com/badge/github/StanislawNagorski/AgendaCheck.svg)](https://wakatime.com/badge/github/StanislawNagorski/AgendaCheck)
+
+Front on JSP version -------------> [![time tracker](https://wakatime.com/badge/github/StanislawNagorski/AgendaCheckWeb.svg)](https://wakatime.com/badge/github/StanislawNagorski/AgendaCheckWeb)
 
 # AgendaCheck
 Project to help me, and my team better adjust work schedule of teammates to customer in-store traffic.
@@ -14,10 +16,10 @@ https://github.com/StanislawNagorski/AgendaCheck
 # Technology stack
 
 - Java
+- JavaScript
 - Maven
 - JFreeChart
-- Spring
-
+- JSP and 
 # Problems solved by program
 
 - program creates report about how well-fitted schedule is forecasted turnover.
@@ -37,6 +39,6 @@ https://github.com/StanislawNagorski/AgendaCheck
 - but good-packages are better! 
 - working with debugger,
 - awt & Swing, JavaFX,
-- thymeleaf,
-- Spring
+- JavaScript basics,
+- JSP servlets
  

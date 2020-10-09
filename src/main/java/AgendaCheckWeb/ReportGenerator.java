@@ -27,7 +27,7 @@ public class ReportGenerator {
     ForecastReader forecastReader;
     DataBank dataBank;
 
-    public ReportGenerator(File forecastFile, File scheduleFile, double productivityTarget) throws IOException, InvalidFormatException {
+    public ReportGenerator(File forecastFile, File scheduleFile, double productivityTarget)  {
         this.forecastFile = forecastFile;
         this.scheduleFile = scheduleFile;
         this.productivityTarget = productivityTarget;
@@ -36,17 +36,23 @@ public class ReportGenerator {
         dataBank = new DataBank(scheduleReader, forecastReader, productivityTarget);
     }
 
-    private void setUpReaders() throws IOException, InvalidFormatException {
-        OPCPackage forecastInput = OPCPackage.open(forecastFile);
-        XSSFWorkbook forecast = new XSSFWorkbook(forecastInput);
-        forecastInput.close();
+    private void setUpReaders() {
+        try {
+            OPCPackage forecastInput = OPCPackage.open(forecastFile);
+            XSSFWorkbook forecast = new XSSFWorkbook(forecastInput);
+            forecastInput.close();
 
-        OPCPackage scheduleInput = OPCPackage.open(scheduleFile);
-        XSSFWorkbook schedule = new XSSFWorkbook(scheduleInput);
-        scheduleInput.close();
+            OPCPackage scheduleInput = OPCPackage.open(scheduleFile);
+            XSSFWorkbook schedule = new XSSFWorkbook(scheduleInput);
+            scheduleInput.close();
 
-        scheduleReader = new ScheduleReader(schedule);
-        forecastReader = new ForecastReader(forecast);
+            scheduleReader = new ScheduleReader(schedule);
+            forecastReader = new ForecastReader(forecast);
+
+        } catch (InvalidFormatException | IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public double getDurationInSec() {
