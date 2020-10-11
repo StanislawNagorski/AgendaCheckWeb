@@ -22,6 +22,8 @@ public class UploadServlet extends HttpServlet {
 
     private static final String UPLOAD_DIRECTORY = "out";
     String fileName;
+    double prodTarget;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/uploader.jsp").forward(req, resp);
@@ -36,7 +38,8 @@ public class UploadServlet extends HttpServlet {
             fileName = getFileName(part);
             part.write(uploadPath + File.separator + fileName);
         }
-        resp.getWriter().print("all done");
+        resp.getWriter().print("all done " + req.getParameter("productivityTarget"));
+
     }
 
     private String getFileName(Part part) {
