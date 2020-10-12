@@ -13,9 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 
 @WebServlet(name = "Home", value = "/home")
@@ -62,12 +60,14 @@ public class HomeServlet extends HttpServlet {
                     String fileName = FilenameUtils.getName(item.getName());
                     InputStream fileContent = item.getInputStream();
                     // ... (do your job here)
+                    OutputStream out = new FileOutputStream("C:\\Users\\Gabi\\IdeaProjects\\AgendaCheckWeb\\out\\temp.xlsx");
+                    fileContent.transferTo(out);
                 }
             }
         } catch (FileUploadException e) {
             throw new ServletException("Cannot parse multipart request.", e);
         }
-
+        request.getRequestDispatcher("/index.jsp").forward(request, resp);
 
 
 
