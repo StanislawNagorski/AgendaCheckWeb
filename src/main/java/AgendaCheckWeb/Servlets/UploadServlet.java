@@ -1,6 +1,8 @@
 package AgendaCheckWeb.Servlets;
 
 
+import AgendaCheckWeb.ReportGenerator;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -20,10 +22,14 @@ public class UploadServlet extends HttpServlet {
     private static final String UPLOAD_DIRECTORY = "out";
     private static final String GESSEF_LABEL = "gessef";
     private static final String PLANQ_LABEL = "planQ";
+    public static final String PRODUCTIVITY_TARGET = "productivityTarget";
+    public static final String REPORT_PATH = "reportPath";
+    public static final String DURATION = "duration";
 
     private File gessef;
     private File planQ;
     private double prodTarget;
+    private double reportCreatedInSeconds;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,9 +62,32 @@ public class UploadServlet extends HttpServlet {
             }
         }
 
-        resp.getWriter().printf("productivity target: %f \n", prodTarget);
-        resp.getWriter().printf("Gessef file name %s and it size is %f in MB\n", gessef.getName(), (double)gessef.length()/1000000);
-        resp.getWriter().printf("PlanQ file name %s and it size is %f in MB\n", planQ.getName(), (double) planQ.length()/1000000);
+        req.setAttribute(PRODUCTIVITY_TARGET, prodTarget);
+        double gSize = (double) gessef.length() / 1000000;
+        req.setAttribute(GESSEF_LABEL, gSize);
+        double pSize = (double) planQ.length() / 1000000;
+        req.setAttribute(PLANQ_LABEL,pSize);
+        String reportPath = localizationOfCreatedReport();
+        System.out.println(reportPath);
+        req.setAttribute(REPORT_PATH, reportPath);
+        req.setAttribute(DURATION, reportCreatedInSeconds);
 
+        req.getRequestDispatcher("/download.jsp").forward(req,resp);
+    }
+
+    private String localizationOfCreatedReport() {
+        String downloadPath = getServletContext().getRealPath("") + UPLOAD_DIRECTORY;
+        ReportGenerator rg = new ReportGenerator(gessef,planQ,prodTarget);
+
+        String reportPath = "#";
+
+        try {
+            reportPath = rg.writeFullReport(downloadPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        reportCreatedInSeconds = rg.getDurationInSec();
+
+        return reportPath;
     }
 }

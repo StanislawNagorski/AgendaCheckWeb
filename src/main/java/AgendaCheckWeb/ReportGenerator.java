@@ -63,7 +63,7 @@ public class ReportGenerator {
         return dataBank;
     }
 
-    public void generateFullReport() throws IOException {
+    private void generateFullReport() throws IOException {
 
         long start = System.nanoTime();
         report = new XSSFWorkbook();
@@ -78,15 +78,19 @@ public class ReportGenerator {
         durationInSec = (double) duration / 1000000000;
     }
 
-    public void writeFullReport(String path) throws IOException {
+    public String writeFullReport(String path) throws IOException {
+
+        generateFullReport();
         LocalDateTime date = LocalDateTime.now();
-        DateTimeFormatter dt = DateTimeFormatter.ofPattern("uuuu-MM-dd HH.mm.ss");
+        DateTimeFormatter dt = DateTimeFormatter.ofPattern("uuuu-MM-dd_HH.mm.ss");
 
         String storeNumber = forecastFile.getName().substring(0, 4);
-        String fileName = "\\" + storeNumber + " Raport z " + date.format(dt) + ".xlsx";
+        String fileName = File.separator + storeNumber + "_Raport_ z_ " + date.format(dt) + ".xlsx";
 
         report.write(new FileOutputStream(path + fileName));
         report.close();
+
+        return path + fileName;
     }
 
 }
