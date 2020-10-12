@@ -15,9 +15,9 @@
 <h3>File Upload:</h3>
 Select a file to upload: <br />
 <form method="post" action="up" enctype="multipart/form-data">
-    Choose a file: <input type="file" name="multiPartServlet" />
+    Choose a gessef: <input type="file" name="gessef" />
     <br>
-    Choose a file: <input type="file" name="multiPartServlet" />
+    Choose a planQ: <input type="file" name="planQ" />
     <br>
     <label for="productivityTarget">Podaj cel produktywności:</label>
     <input type="number" id="productivityTarget" name="productivityTarget" value="1000"

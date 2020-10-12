@@ -20,6 +20,7 @@ https://github.com/StanislawNagorski/AgendaCheck
 - Maven
 - JFreeChart
 - JSP and 
+
 # Problems solved by program
 
 - program creates report about how well-fitted schedule is forecasted turnover.
@@ -38,7 +39,12 @@ https://github.com/StanislawNagorski/AgendaCheck
 - mind-mapping helps to keep track of classes connections,
 - but good-packages are better! 
 - working with debugger,
-- awt & Swing, JavaFX,
+- awt & Swing and finally: JavaFX,
+
+BIG BREAK: Decision to go Web and my front-end struggle begins :)
+My experience with front, thx to this project:
+
 - JavaScript basics,
-- JSP servlets
+- JSP servlets,
+- basics of Kanban in project management,
  
