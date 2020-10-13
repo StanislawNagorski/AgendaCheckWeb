@@ -13,6 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -87,10 +88,11 @@ public class ReportGenerator {
         String storeNumber = forecastFile.getName().substring(0, 4);
         String fileName = File.separator + storeNumber + "_Raport_ z_ " + date.format(dt) + ".xlsx";
 
-        report.write(new FileOutputStream(path + fileName));
+        //report.write(new FileOutputStream(path + fileName));
+        report.write(new FileOutputStream(path + File.separator + "report.xlsx"));
         report.close();
 
-        return path + fileName;
+        return path + File.separator + "report.xlsx";
     }
 
 }

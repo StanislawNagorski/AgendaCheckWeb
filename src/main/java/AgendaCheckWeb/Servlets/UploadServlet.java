@@ -24,12 +24,12 @@ public class UploadServlet extends HttpServlet {
     private static final String PLANQ_LABEL = "planQ";
     public static final String PRODUCTIVITY_TARGET = "productivityTarget";
     public static final String REPORT_PATH = "reportPath";
-    public static final String DURATION = "duration";
+
 
     private File gessef;
     private File planQ;
     private double prodTarget;
-    private double reportCreatedInSeconds;
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,6 +39,9 @@ public class UploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+       // String uploadPath = getServletContext().getContextPath() + File.separator + UPLOAD_DIRECTORY;
+
+
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdir();
@@ -67,16 +70,18 @@ public class UploadServlet extends HttpServlet {
         req.setAttribute(GESSEF_LABEL, gSize);
         double pSize = (double) planQ.length() / 1000000;
         req.setAttribute(PLANQ_LABEL,pSize);
+
+
         String reportPath = localizationOfCreatedReport();
         System.out.println(reportPath);
         req.setAttribute(REPORT_PATH, reportPath);
-        req.setAttribute(DURATION, reportCreatedInSeconds);
 
         req.getRequestDispatcher("/download.jsp").forward(req,resp);
     }
 
     private String localizationOfCreatedReport() {
-        String downloadPath = getServletContext().getRealPath("") + UPLOAD_DIRECTORY;
+        String downloadPath = getServletContext().getRealPath("") +  UPLOAD_DIRECTORY;
+
         ReportGenerator rg = new ReportGenerator(gessef,planQ,prodTarget);
 
         String reportPath = "#";
@@ -86,7 +91,7 @@ public class UploadServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        reportCreatedInSeconds = rg.getDurationInSec();
+
 
         return reportPath;
     }
