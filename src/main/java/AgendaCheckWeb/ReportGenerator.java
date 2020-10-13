@@ -13,6 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -63,7 +64,7 @@ public class ReportGenerator {
         return dataBank;
     }
 
-    public void generateFullReport() throws IOException {
+    private void generateFullReport() throws IOException {
 
         long start = System.nanoTime();
         report = new XSSFWorkbook();
@@ -78,15 +79,22 @@ public class ReportGenerator {
         durationInSec = (double) duration / 1000000000;
     }
 
-    public void writeFullReport(String path) throws IOException {
+    public File writeFullReport(String path) throws IOException {
+
+        generateFullReport();
         LocalDateTime date = LocalDateTime.now();
-        DateTimeFormatter dt = DateTimeFormatter.ofPattern("uuuu-MM-dd HH.mm.ss");
+        DateTimeFormatter dt = DateTimeFormatter.ofPattern("uuuu-MM-dd_HH mm");
 
         String storeNumber = forecastFile.getName().substring(0, 4);
-        String fileName = "\\" + storeNumber + " Raport z " + date.format(dt) + ".xlsx";
+        String fileName = File.separator + storeNumber + "Raport  z  " + date.format(dt) + ".xlsx";
 
-        report.write(new FileOutputStream(path + fileName));
+        FileOutputStream outputStream = new FileOutputStream(path + File.separator + fileName);
+        report.write(outputStream);
         report.close();
+        File reportFile = new File(path + File.separator + fileName);
+
+        //return path + File.separator + "report.xlsx";
+        return reportFile;
     }
 
 }
