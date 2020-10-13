@@ -79,20 +79,22 @@ public class ReportGenerator {
         durationInSec = (double) duration / 1000000000;
     }
 
-    public String writeFullReport(String path) throws IOException {
+    public File writeFullReport(String path) throws IOException {
 
         generateFullReport();
         LocalDateTime date = LocalDateTime.now();
-        DateTimeFormatter dt = DateTimeFormatter.ofPattern("uuuu-MM-dd_HH.mm.ss");
+        DateTimeFormatter dt = DateTimeFormatter.ofPattern("uuuu-MM-dd_HH mm");
 
         String storeNumber = forecastFile.getName().substring(0, 4);
-        String fileName = File.separator + storeNumber + "_Raport_ z_ " + date.format(dt) + ".xlsx";
+        String fileName = File.separator + storeNumber + "Raport  z  " + date.format(dt) + ".xlsx";
 
-        //report.write(new FileOutputStream(path + fileName));
-        report.write(new FileOutputStream(path + File.separator + "report.xlsx"));
+        FileOutputStream outputStream = new FileOutputStream(path + File.separator + fileName);
+        report.write(outputStream);
         report.close();
+        File reportFile = new File(path + File.separator + fileName);
 
-        return path + File.separator + "report.xlsx";
+        //return path + File.separator + "report.xlsx";
+        return reportFile;
     }
 
 }

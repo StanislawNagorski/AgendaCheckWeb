@@ -1,8 +1,6 @@
 package AgendaCheckWeb.Servlets;
 
 
-import AgendaCheckWeb.ReportGenerator;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -13,23 +11,17 @@ import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 
+import static AgendaCheckWeb.Utils.ServletUtils.*;
+
 @WebServlet(name = "UploadServlet", urlPatterns = {"/up", ""})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 5)
 public class UploadServlet extends HttpServlet {
 
-    private static final String UPLOAD_DIRECTORY = "out";
-    private static final String GESSEF_LABEL = "gessef";
-    private static final String PLANQ_LABEL = "planQ";
-    public static final String PRODUCTIVITY_TARGET = "productivityTarget";
-    public static final String REPORT_PATH = "reportPath";
-
-
     private File gessef;
     private File planQ;
     private double prodTarget;
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,7 +31,7 @@ public class UploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
-       // String uploadPath = getServletContext().getContextPath() + File.separator + UPLOAD_DIRECTORY;
+        // String uploadPath = getServletContext().getContextPath() + File.separator + UPLOAD_DIRECTORY;
 
 
         File uploadDir = new File(uploadPath);
@@ -66,33 +58,11 @@ public class UploadServlet extends HttpServlet {
         }
 
         req.setAttribute(PRODUCTIVITY_TARGET, prodTarget);
-        double gSize = (double) gessef.length() / 1000000;
-        req.setAttribute(GESSEF_LABEL, gSize);
-        double pSize = (double) planQ.length() / 1000000;
-        req.setAttribute(PLANQ_LABEL,pSize);
+        req.setAttribute(GESSEF_FILE, gessef);
+        req.setAttribute(PLANQ_FILE, planQ);
 
-
-        String reportPath = localizationOfCreatedReport();
-        System.out.println(reportPath);
-        req.setAttribute(REPORT_PATH, reportPath);
-
-        req.getRequestDispatcher("/download.jsp").forward(req,resp);
+        req.getRequestDispatcher("downloadReport").forward(req, resp);
     }
 
-    private String localizationOfCreatedReport() {
-        String downloadPath = getServletContext().getRealPath("") +  UPLOAD_DIRECTORY;
 
-        ReportGenerator rg = new ReportGenerator(gessef,planQ,prodTarget);
-
-        String reportPath = "#";
-
-        try {
-            reportPath = rg.writeFullReport(downloadPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        return reportPath;
-    }
 }
