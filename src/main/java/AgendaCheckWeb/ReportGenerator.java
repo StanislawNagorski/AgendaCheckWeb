@@ -19,9 +19,9 @@ import java.time.format.DateTimeFormatter;
 
 public class ReportGenerator {
 
-    private File forecastFile;
-    private File scheduleFile;
-    private double productivityTarget;
+    private final File forecastFile;
+    private final File scheduleFile;
+    private final double productivityTarget;
     private XSSFWorkbook report;
     private double durationInSec;
     ScheduleReader scheduleReader;
@@ -56,14 +56,6 @@ public class ReportGenerator {
 
     }
 
-    public double getDurationInSec() {
-        return durationInSec;
-    }
-
-    public DataBank getDataBank() {
-        return dataBank;
-    }
-
     private void generateFullReport() throws IOException {
 
         long start = System.nanoTime();
@@ -83,17 +75,16 @@ public class ReportGenerator {
 
         generateFullReport();
         LocalDateTime date = LocalDateTime.now();
-        DateTimeFormatter dt = DateTimeFormatter.ofPattern("uuuu-MM-dd_HH mm");
+        DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm");
+              String storeNumber = forecastFile.getName().substring(0, 4);
 
-        String storeNumber = forecastFile.getName().substring(0, 4);
-        String fileName = File.separator + storeNumber + "Raport  z  " + date.format(dt) + ".xlsx";
+        String fileName = storeNumber + "Raport  z  " + date.format(dt) + ".xlsx";
 
         FileOutputStream outputStream = new FileOutputStream(path + File.separator + fileName);
         report.write(outputStream);
         report.close();
         File reportFile = new File(path + File.separator + fileName);
 
-        //return path + File.separator + "report.xlsx";
         return reportFile;
     }
 
