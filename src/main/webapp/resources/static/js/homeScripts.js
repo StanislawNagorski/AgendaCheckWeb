@@ -3,4 +3,18 @@ function targetCheck() {
         (charCode >= 48 && charCode <= 57))
 }
 
-// https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
+function checkForm(form) {
+    if (form.gessef.value === "") {
+        alert("Dodaj plik Gessefa");
+        return false;
+    }
+
+    if (form.planQ.value === "") {
+        alert("Dodaj plik planQ");
+        return false;
+    }
+
+}
+
+
+
