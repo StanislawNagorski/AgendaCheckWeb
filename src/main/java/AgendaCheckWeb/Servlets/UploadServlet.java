@@ -25,6 +25,16 @@ public class UploadServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+        // String uploadPath = getServletContext().getContextPath() + File.separator + UPLOAD_DIRECTORY;
+
+        File uploadDir = new File(uploadPath);
+        if (uploadDir.exists()) {
+            System.out.println("skasowana katalog z geta");
+            deleteFolder(uploadDir);
+        }
+        uploadDir.mkdir();
+
         req.getRequestDispatcher("/uploader.jsp").forward(req, resp);
     }
 
@@ -32,12 +42,6 @@ public class UploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
         // String uploadPath = getServletContext().getContextPath() + File.separator + UPLOAD_DIRECTORY;
-
-
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdir();
-        }
 
         prodTarget = Double.parseDouble(req.getParameter("productivityTarget"));
 
@@ -62,6 +66,17 @@ public class UploadServlet extends HttpServlet {
         req.setAttribute(PLANQ_FILE, planQ);
 
         req.getRequestDispatcher("downloadReport").forward(req, resp);
+    }
+
+    static void deleteFolder(File file) {
+        for (File subFile : file.listFiles()) {
+            if (subFile.isDirectory()) {
+                deleteFolder(subFile);
+            } else {
+                subFile.delete();
+            }
+        }
+        file.delete();
     }
 
 

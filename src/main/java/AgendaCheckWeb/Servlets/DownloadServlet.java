@@ -29,7 +29,7 @@ public class DownloadServlet extends HttpServlet {
         resp.setHeader("Content-Disposition","attachment; filename=\"" + reportFile.getName() + "\"");
 
         //use inline if you want to view the content in browser, helpful for pdf file
-        //response.setHeader("Content-Disposition","inline; filename=\"" + filename + "\"");
+        //response.setHeader("Content-Disposition","inline; filename=\"" + reportFile.getName() + "\"");
         FileInputStream fileInputStream = new FileInputStream(reportFile);
 
         int i;
@@ -38,6 +38,8 @@ public class DownloadServlet extends HttpServlet {
         }
         fileInputStream.close();
         out.close();
+
+        req.getRequestDispatcher("/uploader.jsp").forward(req, resp);
     }
 
     @Override
