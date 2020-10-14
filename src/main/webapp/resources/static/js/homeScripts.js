@@ -8,16 +8,6 @@ function checkForm(form) {
     let gessefFileName = form.gessef.value;
     let planQFileName = form.planQ.value;
 
-    if (gessefFileName === "") {
-        alert("Dodaj plik Gessef")
-        return false;
-    }
-
-    if (planQFileName === "") {
-        alert("Dodaj plik PlanuQ")
-        return false;
-    }
-
     const popularNamesGessef = ["gessef", "gesef", "pilota"];
     if (isNameNotValid(gessefFileName, popularNamesGessef)) {
         alert("Sprawdź czy na pewno dodałeś poprawny plik Gessef");

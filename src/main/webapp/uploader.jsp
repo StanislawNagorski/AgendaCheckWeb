@@ -8,9 +8,9 @@
 <h3>Załaduj pliki</h3>
 Wybierz pliki w formacie .xlsx: <br/>
 <form method="post" action="up" enctype="multipart/form-data" onsubmit="return checkForm(this)">
-    <p id="gessefTxt"> Plik gessef: </p> <input type="file" name="gessef"/>
+    <span id="gessefTxt"> Plik gessef: </span> <input type="file" name="gessef" required/>
     <br>
-    <p id="planQTxt"> Plik raportu z planQ: </p><input type="file" name="planQ"/>
+    <span id="planQTxt"> Plik raportu z planQ: </span><input type="file" name="planQ" required/>
     <br>
     <label for="productivityTarget">Podaj cel produktywności:</label>
     <input type="number" id="productivityTarget" name="productivityTarget" value="1000"
