@@ -25,11 +25,12 @@ public class DownloadServlet extends HttpServlet {
         resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
 
+
         resp.setContentType("APPLICATION/OCTET-STREAM");
-        //resp.setHeader("Content-Disposition","attachment; filename=" + File.separator + reportFile.getName() + "\"");
+        resp.setHeader("Content-Disposition","attachment; filename=" + reportFile.getName());
 
         //use inline if you want to view the content in browser, helpful for pdf file
-        resp.setHeader("Content-Disposition","inline; filename=" +  reportFile.getName());
+        //resp.setHeader("Content-Disposition","inline; filename=" +  reportFile.getName());
 
         FileInputStream fileInputStream = new FileInputStream(reportFile);
 

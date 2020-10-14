@@ -2,22 +2,23 @@
 
 <html>
 <head>
-    <script src="resources/static/js/homeScripts.js"></script>
     <title>Uploader</title>
 </head>
 <body>
 <h3>Załaduj pliki</h3>
 Wybierz pliki w formacie .xlsx: <br />
-<form method="post" action="up" enctype="multipart/form-data">
-    Plik gessef: <input type="file" name="gessef" />
+<form method="post" action="up" enctype="multipart/form-data" onsubmit="return checkForm(this)">
+    Plik gessef: <input type="file" name="gessef"  />
     <br>
     Plik raportu z planQ: <input type="file" name="planQ" />
     <br>
     <label for="productivityTarget">Podaj cel produktywności:</label>
     <input type="number" id="productivityTarget" name="productivityTarget" value="1000"
-           onkeypress="return targetCheck()">
+           onkeypress="targetCheck()">
     <input type="submit" value="Generuj raport" />
-
 </form>
+
+
+<script language="JavaScript" type="text/javascript" src="resources/static/js/homeScripts.js"></script>
 </body>
 </html>

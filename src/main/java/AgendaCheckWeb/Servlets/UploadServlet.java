@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import static AgendaCheckWeb.Utils.ServletUtils.*;
 
@@ -66,6 +67,8 @@ public class UploadServlet extends HttpServlet {
         req.setAttribute(PLANQ_FILE, planQ);
 
         req.getRequestDispatcher("downloadReport").forward(req, resp);
+
+
     }
 
     private static void deleteFolder(File file) {
