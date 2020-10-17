@@ -9,8 +9,7 @@ THIS IS WEB-VERSION of my JavaFX project:
 
 https://github.com/StanislawNagorski/AgendaCheck
 
-![DragAndDropArea](https://user-images.githubusercontent.com/60883168/87860801-b893b800-c940-11ea-8bc9-72f982eb453e.JPG)
-![QuickViewArea](https://user-images.githubusercontent.com/60883168/87860802-b92c4e80-c940-11ea-9000-f2f4a50b1706.JPG)
+![DragAndDropArea](https://user-images.githubusercontent.com/60883168/96349985-6125f500-10b3-11eb-8920-d36c3f7e1157.png)
 ![ReportPreview](https://user-images.githubusercontent.com/60883168/87861908-1deca680-c94b-11ea-8d75-e02008db3f2b.JPG)
 
 # Technology stack
