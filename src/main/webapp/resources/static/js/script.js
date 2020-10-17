@@ -24,6 +24,8 @@ function checkForm(form) {
     } else {
         heightLightToGreen("planQTxt");
     }
+
+    unhideElement("processing");
 }
 
 function isNameNotValid(fileName, popularNames) {
@@ -42,3 +44,7 @@ function heightLightToGreen(elementID) {
     elementById.style.fontWeight = "900";
 }
 
+function unhideElement(elementID) {
+    let elementById = document.getElementById(elementID);
+    elementById.style.visibility = "visible";
+}

@@ -68,6 +68,8 @@ public class UploadServlet extends HttpServlet {
 
         req.getRequestDispatcher("downloadReport").forward(req, resp);
 
+        System.out.println("z powrotem w uplodzie");
+
 
     }
 

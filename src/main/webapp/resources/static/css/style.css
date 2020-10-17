@@ -43,7 +43,7 @@ html {
 }
 
 .form__label {
-    width: 100px;
+    width: 200px;
     display: inline-block;
     font-size: 12px;
     position: relative;
@@ -51,7 +51,7 @@ html {
 }
 
 .form__label__first {
-    width: 100px;
+    width: 200px;
     display: inline-block;
     font-size: 12px;
 }
