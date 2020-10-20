@@ -21,7 +21,10 @@ public class DownloadServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        File reportFile = writeReportFile(req);
+
+        //File reportFile = writeReportFile(req);
+        File reportFile = (File) req.getAttribute(REPORT_FILE);
+
         resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
 
@@ -49,14 +52,14 @@ public class DownloadServlet extends HttpServlet {
        doGet(req,resp);
     }
 
-    private File writeReportFile(HttpServletRequest request) throws IOException {
-        File gessef = (File) request.getAttribute(GESSEF_FILE);
-        File planQ = (File) request.getAttribute(PLANQ_FILE);
-        double prodTarget = (double) request.getAttribute(PRODUCTIVITY_TARGET);
-
-        ReportGenerator rg = new ReportGenerator(gessef,planQ,prodTarget);
-        String downloadPath = getServletContext().getRealPath("") +  UPLOAD_DIRECTORY;
-
-        return rg.writeFullReport(downloadPath);
-    }
+//    private File writeReportFile(HttpServletRequest request) throws IOException {
+//        File gessef = (File) request.getAttribute(GESSEF_FILE);
+//        File planQ = (File) request.getAttribute(PLANQ_FILE);
+//        double prodTarget = (double) request.getAttribute(PRODUCTIVITY_TARGET);
+//
+//        ReportGenerator rg = new ReportGenerator(gessef,planQ,prodTarget);
+//        String downloadPath = getServletContext().getRealPath("") +  UPLOAD_DIRECTORY;
+//
+//        return rg.writeFullReport(downloadPath);
+//    }
 }
