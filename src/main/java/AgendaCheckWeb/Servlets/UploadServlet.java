@@ -1,6 +1,8 @@
 package AgendaCheckWeb.Servlets;
 
 
+import AgendaCheckWeb.ReportGenerator;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -23,11 +25,11 @@ public class UploadServlet extends HttpServlet {
     private File gessef;
     private File planQ;
     private double prodTarget;
+    private File reportFile;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
-        // String uploadPath = getServletContext().getContextPath() + File.separator + UPLOAD_DIRECTORY;
 
         File uploadDir = new File(uploadPath);
         if (uploadDir.exists()) {
@@ -62,14 +64,16 @@ public class UploadServlet extends HttpServlet {
             }
         }
 
-        req.setAttribute(PRODUCTIVITY_TARGET, prodTarget);
-        req.setAttribute(GESSEF_FILE, gessef);
-        req.setAttribute(PLANQ_FILE, planQ);
+        String downloadPath = getServletContext().getRealPath("") +  UPLOAD_DIRECTORY;
+        reportFile = writeReportFile(downloadPath);
 
-        req.getRequestDispatcher("downloadReport").forward(req, resp);
+        System.out.println(reportFile.getAbsolutePath());
+        System.out.println(reportFile.getCanonicalPath());
+        req.setAttribute(REPORT_FILE, reportFile);
 
-        System.out.println("z powrotem w uplodzie");
-
+        req.setAttribute(REPORT_DIRECTORY, UPLOAD_DIRECTORY+File.separator+reportFile.getName());
+        System.out.println(UPLOAD_DIRECTORY+File.separator+reportFile.getName());
+        req.getRequestDispatcher("/downloader.jsp").forward(req, resp);
 
     }
 
@@ -90,6 +94,15 @@ public class UploadServlet extends HttpServlet {
                 return content.substring(content.indexOf("=") + 2, content.length() - 1);
         }
         return "gessef.xlsx";
+    }
+
+    private File writeReportFile(String path) throws IOException {
+
+        ReportGenerator rg = new ReportGenerator(gessef,planQ,prodTarget);
+        String downloadPath = path;
+
+
+        return rg.writeFullReport(downloadPath);
     }
 
 

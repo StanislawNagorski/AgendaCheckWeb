@@ -30,7 +30,9 @@ html {
 .fieldset {
     border-radius: 5px;
     padding-bottom: 2px;
+    height: 185px;
 }
+
 .form {
     margin-bottom: 0px;
 }
@@ -75,6 +77,7 @@ html {
     color: black;
     font-weight: 900;
 }
+
 .loading__bar {
     position: relative;
     left: 120px;
@@ -84,4 +87,20 @@ html {
     font-size: 8px;
     margin: 0px;
     color: white;
+}
+
+.icon {
+
+}
+
+.headline {
+    width: 200px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.text_icon {
+    display: flex;
+    text-align: center;
+    height: 120px;
 }
