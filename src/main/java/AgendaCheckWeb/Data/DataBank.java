@@ -140,8 +140,7 @@ public class DataBank {
         }
 
         Set<String> noneRetailDepartmentNames = dailyNoneRetailDepartmentHours.keySet();
-
-        for (String noneRetailDepartmentName : noneRetailDepartmentNames) {
+              for (String noneRetailDepartmentName : noneRetailDepartmentNames) {
 
             List<Double> singleDepartmentList = dailyDepartmentHoursByName.get(noneRetailDepartmentName);
             int daysNumber = sumOfDailyNonRetailHours.size();

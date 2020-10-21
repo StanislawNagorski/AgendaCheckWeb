@@ -67,12 +67,7 @@ public class UploadServlet extends HttpServlet {
         String downloadPath = getServletContext().getRealPath("") +  UPLOAD_DIRECTORY;
         reportFile = writeReportFile(downloadPath);
 
-        System.out.println(reportFile.getAbsolutePath());
-        System.out.println(reportFile.getCanonicalPath());
-        req.setAttribute(REPORT_FILE, reportFile);
-
         req.setAttribute(REPORT_DIRECTORY, UPLOAD_DIRECTORY+File.separator+reportFile.getName());
-        System.out.println(UPLOAD_DIRECTORY+File.separator+reportFile.getName());
         req.getRequestDispatcher("/downloader.jsp").forward(req, resp);
 
     }

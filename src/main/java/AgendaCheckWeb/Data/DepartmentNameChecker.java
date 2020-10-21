@@ -38,6 +38,10 @@ public class DepartmentNameChecker {
         if (commonPairCheck(pair6, name1, name2)) {
             return true;
         }
+        String[] pair7 = {"wed", "zima"};
+        if (commonPairCheck(pair7, name1, name2)) {
+            return true;
+        }
 
         return false;
     }
