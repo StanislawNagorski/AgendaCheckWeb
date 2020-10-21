@@ -1,16 +1,21 @@
 package AgendaCheckWeb.Forecast;
 
+
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import java.util.*;
 
 public class ForecastReader {
 
     private final XSSFWorkbook forecast;
     private int numberOFDepartmentSheets = 0;
+
 
     public ForecastReader(XSSFWorkbook forecast) {
         this.forecast = forecast;
@@ -49,7 +54,13 @@ public class ForecastReader {
                     XSSFCell dailyTurnoverCell = forecastSheet.getRow(i + dataStartRow)
                             .getCell(columnWithDailyTurnOver);
                     double dayTO;
-                    CellType cachedFormulaResultType = dailyTurnoverCell.getCachedFormulaResultType();
+
+                    CellType cachedFormulaResultType = null;
+                    try {
+                        cachedFormulaResultType = dailyTurnoverCell.getCachedFormulaResultType();
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    }
 
                     if (cachedFormulaResultType == CellType.STRING) {
                         dayTO = 0;

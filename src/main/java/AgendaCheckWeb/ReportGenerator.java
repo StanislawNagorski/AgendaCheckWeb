@@ -5,17 +5,12 @@ import AgendaCheckWeb.Data.DataBank;
 import AgendaCheckWeb.Forecast.ForecastReader;
 import AgendaCheckWeb.ReportToXLSX.ReportWriter;
 import AgendaCheckWeb.Schedule.ScheduleReader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -30,7 +25,6 @@ public class ReportGenerator {
     ForecastReader forecastReader;
     DataBank dataBank;
 
-    private final Logger logger = LogManager.getLogger();
 
     public ReportGenerator(File forecastFile, File scheduleFile, double productivityTarget) {
         this.forecastFile = forecastFile;
@@ -55,7 +49,7 @@ public class ReportGenerator {
             forecastReader = new ForecastReader(forecast);
 
         } catch (InvalidFormatException | IOException e) {
-            logger.error(e);
+            e.printStackTrace();
         }
 
     }
@@ -67,7 +61,7 @@ public class ReportGenerator {
             reportWriter.writeStoreSheet();
             reportWriter.writeAllDepartmentsSheets();
         } catch (IOException e) {
-            logger.error(e);
+           e.printStackTrace();
         }
 
     }
@@ -86,7 +80,7 @@ public class ReportGenerator {
             report.write(outputStream);
             report.close();
         } catch (IOException e){
-            logger.error(e);
+           e.printStackTrace();
         }
 
         File reportFile = new File(path + File.separator + fileName);
