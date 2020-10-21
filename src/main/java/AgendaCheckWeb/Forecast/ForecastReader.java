@@ -50,6 +50,7 @@ public class ForecastReader {
                 int numericValueOfDate = (int) dateCell.getNumericCellValue();
 
                 boolean cellIsInReportedMonthRange = numericValueOfDate >= monthStartsAt && numericValueOfDate <= monthEndsAt;
+
                 if (cellIsInReportedMonthRange) {
                     XSSFCell dailyTurnoverCell = forecastSheet.getRow(i + dataStartRow)
                             .getCell(columnWithDailyTurnOver);
@@ -59,6 +60,7 @@ public class ForecastReader {
                     try {
                         cachedFormulaResultType = dailyTurnoverCell.getCachedFormulaResultType();
                     } catch (IllegalStateException e) {
+                        System.out.println("Row" + dailyTurnoverCell.getRowIndex());
                         e.printStackTrace();
                     }
 
