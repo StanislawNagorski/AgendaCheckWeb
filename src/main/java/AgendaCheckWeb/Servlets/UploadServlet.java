@@ -1,6 +1,5 @@
 package AgendaCheckWeb.Servlets;
 
-
 import AgendaCheckWeb.ReportGenerator;
 
 import javax.servlet.ServletException;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Collection;
 
 import static AgendaCheckWeb.Utils.ServletUtils.*;
 
@@ -37,7 +36,8 @@ public class UploadServlet extends HttpServlet {
         }
         uploadDir.mkdir();
 
-        req.getRequestDispatcher("/uploader.jsp").forward(req, resp);
+            req.getRequestDispatcher("/uploader.jsp").forward(req, resp);
+
     }
 
     @Override
@@ -46,30 +46,46 @@ public class UploadServlet extends HttpServlet {
 
         prodTarget = Double.parseDouble(req.getParameter("productivityTarget"));
 
-        for (Part part : req.getParts()) {
+        Collection<Part> parts = null;
+        try {
+            parts = req.getParts();
+        } catch (IOException | ServletException e) {
+            e.printStackTrace();
+        }
+
+        for (Part part : parts) {
 
             String header = part.getHeader("content-disposition");
+
             if (header.contains(GESSEF_LABEL)) {
-                String uploadedFileName = getFileName(part);
-                String fileName = uploadPath + File.separator + uploadedFileName;
-                part.write(fileName);
+                String fileName = writeFileToDir(uploadPath, part);
                 gessef = new File(fileName);
             }
 
             if (header.contains(PLANQ_LABEL)) {
-                String uploadedFileName = getFileName(part);
-                String fileName = uploadPath + File.separator + uploadedFileName;
-                part.write(fileName);
+                String fileName = writeFileToDir(uploadPath, part);
                 planQ = new File(fileName);
             }
         }
 
-        String downloadPath = getServletContext().getRealPath("") +  UPLOAD_DIRECTORY;
+        String downloadPath = getServletContext().getRealPath("") + UPLOAD_DIRECTORY;
         reportFile = writeReportFile(downloadPath);
 
-        req.setAttribute(REPORT_DIRECTORY, UPLOAD_DIRECTORY+File.separator+reportFile.getName());
-        req.getRequestDispatcher("/downloader.jsp").forward(req, resp);
+        req.setAttribute(REPORT_DIRECTORY, UPLOAD_DIRECTORY + File.separator + reportFile.getName());
 
+        req.getRequestDispatcher("/downloader.jsp").forward(req, resp);
+    }
+
+    private String writeFileToDir(String uploadPath, Part part) {
+        String uploadedFileName = getFileName(part);
+        String fileName = uploadPath + File.separator + uploadedFileName;
+
+        try {
+            part.write(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileName;
     }
 
     private static void deleteFolder(File file) {
@@ -91,11 +107,10 @@ public class UploadServlet extends HttpServlet {
         return "gessef.xlsx";
     }
 
-    private File writeReportFile(String path) throws IOException {
+    private File writeReportFile(String path) {
 
-        ReportGenerator rg = new ReportGenerator(gessef,planQ,prodTarget);
+        ReportGenerator rg = new ReportGenerator(gessef, planQ, prodTarget);
         String downloadPath = path;
-
 
         return rg.writeFullReport(downloadPath);
     }
