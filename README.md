@@ -14,11 +14,13 @@ https://github.com/StanislawNagorski/AgendaCheck
 
 # Technology stack
 
-- Java
-- Maven
-- Apache POI
-- JFreeChart
-- JSP, JavaScript
+- Java,
+- Maven,
+- junit,
+- Apache POI,
+- JFreeChart,
+- JSP, JavaScript,
+- Log4j2,
 
 
 # Problems solved by program

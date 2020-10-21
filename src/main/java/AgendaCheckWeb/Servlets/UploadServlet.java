@@ -28,7 +28,7 @@ public class UploadServlet extends HttpServlet {
     private File reportFile;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
 
         File uploadDir = new File(uploadPath);
@@ -41,7 +41,7 @@ public class UploadServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
         String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
 
         prodTarget = Double.parseDouble(req.getParameter("productivityTarget"));
@@ -91,11 +91,10 @@ public class UploadServlet extends HttpServlet {
         return "gessef.xlsx";
     }
 
-    private File writeReportFile(String path) throws IOException {
+    private File writeReportFile(String path) {
 
         ReportGenerator rg = new ReportGenerator(gessef,planQ,prodTarget);
         String downloadPath = path;
-
 
         return rg.writeFullReport(downloadPath);
     }
