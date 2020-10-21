@@ -30,7 +30,7 @@ public class ReportGenerator {
     ForecastReader forecastReader;
     DataBank dataBank;
 
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
 
     public ReportGenerator(File forecastFile, File scheduleFile, double productivityTarget) {
         this.forecastFile = forecastFile;

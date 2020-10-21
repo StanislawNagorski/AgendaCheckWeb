@@ -2,6 +2,8 @@ package AgendaCheckWeb.Servlets;
 
 
 import AgendaCheckWeb.ReportGenerator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -13,6 +15,7 @@ import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 
 import static AgendaCheckWeb.Utils.ServletUtils.*;
 
@@ -27,6 +30,8 @@ public class UploadServlet extends HttpServlet {
     private double prodTarget;
     private File reportFile;
 
+    private final Logger logger = LogManager.getLogger();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
@@ -37,29 +42,37 @@ public class UploadServlet extends HttpServlet {
         }
         uploadDir.mkdir();
 
-        req.getRequestDispatcher("/uploader.jsp").forward(req, resp);
+        try {
+            req.getRequestDispatcher("/uploader.jsp").forward(req, resp);
+        } catch (ServletException | IOException e) {
+            logger.error(e);
+        }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
 
         prodTarget = Double.parseDouble(req.getParameter("productivityTarget"));
 
-        for (Part part : req.getParts()) {
+        Collection<Part> parts = null;
+        try {
+            parts = req.getParts();
+        } catch (IOException | ServletException e) {
+            logger.error(e);
+        }
+
+        for (Part part : parts) {
 
             String header = part.getHeader("content-disposition");
+
             if (header.contains(GESSEF_LABEL)) {
-                String uploadedFileName = getFileName(part);
-                String fileName = uploadPath + File.separator + uploadedFileName;
-                part.write(fileName);
+                String fileName = writeFileToDir(uploadPath, part);
                 gessef = new File(fileName);
             }
 
             if (header.contains(PLANQ_LABEL)) {
-                String uploadedFileName = getFileName(part);
-                String fileName = uploadPath + File.separator + uploadedFileName;
-                part.write(fileName);
+                String fileName = writeFileToDir(uploadPath, part);
                 planQ = new File(fileName);
             }
         }
@@ -68,8 +81,24 @@ public class UploadServlet extends HttpServlet {
         reportFile = writeReportFile(downloadPath);
 
         req.setAttribute(REPORT_DIRECTORY, UPLOAD_DIRECTORY+File.separator+reportFile.getName());
-        req.getRequestDispatcher("/downloader.jsp").forward(req, resp);
+        try {
+            req.getRequestDispatcher("/downloader.jsp").forward(req, resp);
+        } catch (ServletException | IOException e) {
+           logger.error(e);
+        }
 
+    }
+
+    private String writeFileToDir(String uploadPath, Part part) {
+        String uploadedFileName = getFileName(part);
+        String fileName = uploadPath + File.separator + uploadedFileName;
+
+        try {
+            part.write(fileName);
+        } catch (IOException e) {
+           logger.error(e);
+        }
+        return fileName;
     }
 
     private static void deleteFolder(File file) {
