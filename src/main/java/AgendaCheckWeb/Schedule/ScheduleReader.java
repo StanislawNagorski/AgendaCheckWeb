@@ -23,7 +23,7 @@ public class ScheduleReader {
             firstColumn.add(String.valueOf(scheduleSheet.getRow(i).getCell(0)));
         }
 
-        firstColumn.add("Sumy:");
+        firstColumn.add("Suma:");
         return firstColumn;
     }
 
@@ -57,8 +57,8 @@ public class ScheduleReader {
 
     private List<String> createListOfDepartmentNames() {
         List<String> listOfDepartmentNames = new ArrayList<>();
-        int rowOnWhichDataStarts = 1;
-        XSSFRow startRow = scheduleSheet.getRow(rowOnWhichDataStarts);
+        int rowWithDepartmentName = 1;
+        XSSFRow startRow = scheduleSheet.getRow(rowWithDepartmentName);
 
         int columnOnWhichDataStarts = 1;
 
@@ -76,15 +76,36 @@ public class ScheduleReader {
 
         int rowOnWhichDataStarts = 3;
         int columnOnWhichDataStarts = 1;
-        int rowLenght = scheduleSheet.getRow(1).getLastCellNum();
+        int rowLength = scheduleSheet.getRow(1).getLastCellNum();
 
-        for (int i = columnOnWhichDataStarts; i < rowLenght; i++) {
+        for (int i = columnOnWhichDataStarts; i < rowLength; i++) {
 
+        
             List<Double> departmentHoursByDay = new ArrayList<>();
             for (int j = rowOnWhichDataStarts; j < scheduleSheet.getLastRowNum()+1; j++) {
-                departmentHoursByDay.add(scheduleSheet.getRow(j).getCell(i).getNumericCellValue());
+                double dailyHours = scheduleSheet.getRow(j).getCell(i).getNumericCellValue();
+                departmentHoursByDay.add(dailyHours);
             }
-            dailyHoursByDepartment.add(departmentHoursByDay);
+
+            int rowWithContractType = 2;
+            String tempContract = "tymczasowe";
+            String contractType = scheduleSheet.getRow(rowWithContractType).getCell(i).getStringCellValue();
+            if(contractType.contains(tempContract)){
+                int lastDepartmentIndex = dailyHoursByDepartment.size() - 1;
+                List<Double> lastDepartment = dailyHoursByDepartment.get(lastDepartmentIndex);
+                
+                for (int k = 0; k < lastDepartment.size(); k++) {
+                    Double employeeHours = lastDepartment.get(k);
+                    Double tempEmployeeHours = departmentHoursByDay.get(k);
+                    lastDepartment.set(k,tempEmployeeHours+employeeHours);
+                }
+
+                dailyHoursByDepartment.set(lastDepartmentIndex,lastDepartment);
+                
+            } else {
+                dailyHoursByDepartment.add(departmentHoursByDay);
+            }
+                       
         }
 
         return dailyHoursByDepartment;
