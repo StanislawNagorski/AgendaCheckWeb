@@ -6,6 +6,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import AgendaCheckWeb.Forecast.ForecastReader;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+@Ignore
 public class BackTest {
     @Test
     public void shouldCreateReportForMayForJune() throws IOException, InvalidFormatException {
