@@ -2,6 +2,9 @@ Backend and JavaFX version --> [![time tracker](https://wakatime.com/badge/githu
 
 Front on JSP version -------------> [![time tracker](https://wakatime.com/badge/github/StanislawNagorski/AgendaCheckWeb.svg)](https://wakatime.com/badge/github/StanislawNagorski/AgendaCheckWeb)
 
+![Build and deploy WAR app to Azure Web App - agendacheck](https://github.com/StanislawNagorski/AgendaCheckWeb/workflows/Build%20and%20deploy%20WAR%20app%20to%20Azure%20Web%20App%20-%20agendacheck/badge.svg?branch=master)
+https://agendacheck.azurewebsites.net/AgendaCheckTomCatVersion/
+
 # AgendaCheck
 Project to help me, and my team better adjust work schedule of teammates to customer in-store traffic.
 It takes data from to .xlsx files and creates new report.
@@ -20,7 +23,8 @@ https://github.com/StanislawNagorski/AgendaCheck
 - Apache POI,
 - JFreeChart,
 - JSP, JavaScript,
-- Log4j2,
+- Tomcat 9,
+- Microsoft Azure,
 
 
 # Problems solved by program
@@ -47,6 +51,6 @@ BIG BREAK: Decision to go Web and my front-end struggle begins :)
 My experience with front, thx to this project:
 
 - JavaScript basics,
-- JSP servlets,
+- JSP servlets and Tomcat,
 - basics of Kanban in project management,
- 
+- Azure and GitHub continuously deploying,
