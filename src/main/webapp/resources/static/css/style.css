@@ -93,14 +93,13 @@ html {
 
 }
 
-.headline {
-    width: 200px;
-    text-align: center;
-    font-size: 16px;
-}
-
 .text_icon {
     display: flex;
     text-align: center;
     height: 120px;
+}
+
+.flexbox_element {
+    margin: auto 20px;
+    padding-bottom: 15px;
 }
