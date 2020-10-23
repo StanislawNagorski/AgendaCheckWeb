@@ -29,13 +29,13 @@
             <legend class="legend">Sukces</legend>
 
 
-            <div class="headline" style="text-align: center;">
+            <div style="text-align: center;">
                 <h4> Raport stworzony poprawnie</h4>
             </div>
 
             <div class="text_icon" style="height: 100px; text-align: center;">
-                <h5> Kliknij w ikonę aby go pobrać</h5>
-                <a href="<c:url value = "${reportDownloadPath}"/>">
+                <h5 class="flexbox_element"> Kliknij w ikonę aby go pobrać</h5>
+                <a class="flexbox_element" href="<c:url value = "${reportDownloadPath}"/>">
                     <img class="icon" src="resources/static/images/spreadsheet.gif"> </a>
 
             </div>
@@ -46,10 +46,8 @@
             <button class="submit__button" type="button">Powrót</button>
         </a>
 
-
     </div>
 </div>
-
 
 <script language="JavaScript" type="text/javascript" src="resources/static/js/script.js"></script>
 </body>
