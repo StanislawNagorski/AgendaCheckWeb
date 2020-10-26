@@ -73,7 +73,7 @@ public class UploadServlet extends HttpServlet {
         String downloadPath = getServletContext().getRealPath("") + UPLOAD_DIRECTORY;
         try {
             reportFile = writeReportFile(downloadPath);
-        } catch (InvalidFormatException | NumberFormatException invalidFormatException) {
+        } catch (InvalidFormatException | NumberFormatException | NullPointerException invalidFormatException) {
             invalidFormatException.printStackTrace();
             req.getRequestDispatcher("/error.html").forward(req, resp);
         }
