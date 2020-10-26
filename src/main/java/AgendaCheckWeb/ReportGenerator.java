@@ -26,7 +26,7 @@ public class ReportGenerator {
     DataBank dataBank;
 
 
-    public ReportGenerator(File forecastFile, File scheduleFile, double productivityTarget) {
+    public ReportGenerator(File forecastFile, File scheduleFile, double productivityTarget) throws IOException, InvalidFormatException {
         this.forecastFile = forecastFile;
         this.scheduleFile = scheduleFile;
         this.productivityTarget = productivityTarget;
@@ -35,8 +35,8 @@ public class ReportGenerator {
         dataBank = new DataBank(scheduleReader, forecastReader, productivityTarget);
     }
 
-    private void setUpReaders() {
-        try {
+    private void setUpReaders() throws IOException, InvalidFormatException {
+
             OPCPackage forecastInput = OPCPackage.open(forecastFile);
             XSSFWorkbook forecast = new XSSFWorkbook(forecastInput);
             forecastInput.close();
@@ -48,25 +48,21 @@ public class ReportGenerator {
             scheduleReader = new ScheduleReader(schedule);
             forecastReader = new ForecastReader(forecast);
 
-        } catch (InvalidFormatException | IOException e) {
-            e.printStackTrace();
-        }
+
 
     }
 
-    private void generateFullReport() {
+    private void generateFullReport() throws IOException {
         report = new XSSFWorkbook();
         ReportWriter reportWriter = new ReportWriter(report, dataBank);
-        try {
+
             reportWriter.writeStoreSheet();
             reportWriter.writeAllDepartmentsSheets();
-        } catch (IOException e) {
-           e.printStackTrace();
-        }
+
 
     }
 
-    public File writeFullReport(String path) {
+    public File writeFullReport(String path) throws IOException {
 
         generateFullReport();
         LocalDateTime date = LocalDateTime.now();

@@ -1,6 +1,7 @@
 package AgendaCheckWeb.Servlets;
 
 import AgendaCheckWeb.ReportGenerator;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -36,7 +37,7 @@ public class UploadServlet extends HttpServlet {
         }
         uploadDir.mkdir();
 
-            req.getRequestDispatcher("/uploader.jsp").forward(req, resp);
+        req.getRequestDispatcher("/uploader.jsp").forward(req, resp);
 
     }
 
@@ -51,6 +52,7 @@ public class UploadServlet extends HttpServlet {
             parts = req.getParts();
         } catch (IOException | ServletException e) {
             e.printStackTrace();
+            req.getRequestDispatcher("/error.html").forward(req, resp);
         }
 
         for (Part part : parts) {
@@ -69,22 +71,24 @@ public class UploadServlet extends HttpServlet {
         }
 
         String downloadPath = getServletContext().getRealPath("") + UPLOAD_DIRECTORY;
-        reportFile = writeReportFile(downloadPath);
+        try {
+            reportFile = writeReportFile(downloadPath);
+        } catch (InvalidFormatException | NumberFormatException | NullPointerException invalidFormatException) {
+            invalidFormatException.printStackTrace();
+            req.getRequestDispatcher("/error.html").forward(req, resp);
+        }
 
         req.setAttribute(REPORT_DIRECTORY, UPLOAD_DIRECTORY + File.separator + reportFile.getName());
 
         req.getRequestDispatcher("/downloader.jsp").forward(req, resp);
     }
 
-    private String writeFileToDir(String uploadPath, Part part) {
+    private String writeFileToDir(String uploadPath, Part part) throws IOException {
         String uploadedFileName = getFileName(part);
         String fileName = uploadPath + File.separator + uploadedFileName;
 
-        try {
-            part.write(fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        part.write(fileName);
+
         return fileName;
     }
 
@@ -107,7 +111,7 @@ public class UploadServlet extends HttpServlet {
         return "gessef.xlsx";
     }
 
-    private File writeReportFile(String path) {
+    private File writeReportFile(String path) throws IOException, InvalidFormatException, NumberFormatException {
 
         ReportGenerator rg = new ReportGenerator(gessef, planQ, prodTarget);
         String downloadPath = path;

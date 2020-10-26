@@ -7,7 +7,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class MonthChecker {
 
-    public static int[] checkMonthAndYear(List<String> firstColumn){
+    public static int[] checkMonthAndYear (List<String> firstColumn) throws NumberFormatException{
         String firstDay = firstColumn.get(3);
         String[] spited = firstDay.split("-");
         int year = Integer.parseInt(spited[0]);
