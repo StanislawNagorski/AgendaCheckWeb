@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
 
@@ -73,7 +74,7 @@ public class UploadServlet extends HttpServlet {
         String downloadPath = getServletContext().getRealPath("") + UPLOAD_DIRECTORY;
         try {
             reportFile = writeReportFile(downloadPath);
-        } catch (InvalidFormatException | NumberFormatException | NullPointerException invalidFormatException) {
+        } catch (InvalidFormatException | NumberFormatException | NullPointerException | FileNotFoundException invalidFormatException) {
             invalidFormatException.printStackTrace();
             req.getRequestDispatcher("/error.jsp").forward(req, resp);
         }
