@@ -31,7 +31,7 @@
 
 <body>
 <div class="monitor">
-    <p class="signature">App: Stanisław Nagórski designed: Mariusz Wojtkiewicz</p>
+    <p class="signature">App: Stanisław Nagórski style: Mariusz Wojtkiewicz</p>
     <div class="container">
 
         <fieldset class="fieldset">

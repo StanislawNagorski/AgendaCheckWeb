@@ -75,7 +75,7 @@ public class UploadServlet extends HttpServlet {
             reportFile = writeReportFile(downloadPath);
         } catch (InvalidFormatException | NumberFormatException | NullPointerException invalidFormatException) {
             invalidFormatException.printStackTrace();
-            req.getRequestDispatcher("/error.html").forward(req, resp);
+            req.getRequestDispatcher("/error.jsp").forward(req, resp);
         }
 
         req.setAttribute(REPORT_DIRECTORY, UPLOAD_DIRECTORY + File.separator + reportFile.getName());

@@ -28,7 +28,7 @@
 
 <body>
 <div class="monitor">
-    <p class="signature">App: Stanisław Nagórski designed: Mariusz Wojtkiewicz</p>
+    <p class="signature">App: Stanisław Nagórski style: Mariusz Wojtkiewicz</p>
     <div class="container">
         <form class="form" method="post" action="up" enctype="multipart/form-data"
               onsubmit="return checkForm(this)">
