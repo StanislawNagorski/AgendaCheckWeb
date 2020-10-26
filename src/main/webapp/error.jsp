@@ -21,6 +21,6 @@
 <h4> 1. Sprawdź filmy instruktażowe poniżej o poprawności plików </h4>
 <h4> 2. Jeśli wszystko wydaje się ok, wyślij proszę pliki do mnie:</h4>
 <h4> stanislaw.nagorski@decathlon.com</h4>
-<h3><a href="uploader.jsp"> Powrót do strony głównej </a> </h3>
+<h3><a href="uploader.jsp"> Powrót do głównej </a> </h3>
 </body>
 </html>
