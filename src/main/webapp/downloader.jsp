@@ -26,7 +26,7 @@
     <script defer src="resources/static/js/script.js"></script>
 
     <head>
-        <title>Uploader</title>
+        <title>Downloader</title>
     </head>
 
 <body>

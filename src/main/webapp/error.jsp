@@ -13,7 +13,7 @@
 </script>
 <head>
     <meta charset="UTF-8">
-    <title>Błąd</title>
+    <title>Error</title>
 </head>
 <body>
 <h3> (✖╭╮✖) Coś poszło nie tak... </h3>
