@@ -18,7 +18,7 @@ public class DepartmentNameChecker {
         if (commonPairCheck(pair1, name1, name2)) {
             return true;
         }
-        String[] pair2 = {"turystyka", "góry"};
+        String[] pair2 = {"turysty", "góry"};
         if (commonPairCheck(pair2, name1, name2)) {
             return true;
         }
@@ -30,7 +30,7 @@ public class DepartmentNameChecker {
         if (commonPairCheck(pair4, name1, name2)) {
             return true;
         }
-        String[] pair5 = {"turystyka", "quechua"};
+        String[] pair5 = {"turysty", "quechua"};
         if (commonPairCheck(pair5, name1, name2)) {
             return true;
         }
@@ -40,6 +40,14 @@ public class DepartmentNameChecker {
         }
         String[] pair7 = {"wed", "zima"};
         if (commonPairCheck(pair7, name1, name2)) {
+            return true;
+        }
+        String[] pair8 = {"wod", "wodne"};
+        if (commonPairCheck(pair8, name1, name2)) {
+            return true;
+        }
+        String[] pair9 = {"rakiet", "tenis"};
+        if (commonPairCheck(pair9, name1, name2)) {
             return true;
         }
 
@@ -58,7 +66,7 @@ public class DepartmentNameChecker {
 
         String[] splitedScheduleName = scheduleName.split("(\\s|\\/)");
         for (String s : splitedScheduleName) {
-            if (s.equals("")){
+            if (s.equals("")) {
                 continue;
             }
 
