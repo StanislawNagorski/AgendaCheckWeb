@@ -1,17 +1,15 @@
 package AgendaCheckWeb.Data;
 
 
+import AgendaCheckWeb.Forecast.ForecastReader;
 import AgendaCheckWeb.ReportToXLSX.ReportWriter;
+import AgendaCheckWeb.Schedule.ScheduleReader;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import AgendaCheckWeb.Forecast.ForecastReader;
-import AgendaCheckWeb.Schedule.MonthChecker;
-import AgendaCheckWeb.Schedule.ScheduleReader;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -143,6 +141,38 @@ public class BackTest {
         report.write(new FileOutputStream("TestResults/643October.xlsx"));
         report.close();
         File checkFile = new File("TestResults/643October.xlsx");
+
+        //Then
+        Assert.assertTrue(checkFile.exists());
+
+    }
+
+    @Test
+    public void shouldCreateReportForStore376ForNovember() throws IOException, InvalidFormatException {
+
+        //Given
+        OPCPackage scheduleInput = OPCPackage.open(new File("SampleInput/Bielany/sumDivisionReport_20201027_112815.xlsx"));
+        XSSFWorkbook schedule = new XSSFWorkbook(scheduleInput);
+        scheduleInput.close();
+
+        OPCPackage forecastInput = OPCPackage.open(new File("SampleInput/Bielany/376 Gessef 2020.xlsx"));
+        XSSFWorkbook forecast = new XSSFWorkbook(forecastInput);
+        forecastInput.close();
+
+        XSSFWorkbook report = new XSSFWorkbook();
+
+        ScheduleReader scheduleReader = new ScheduleReader(schedule);
+        ForecastReader forecastReader = new ForecastReader(forecast);
+        double productivityTargetUserInput = 800.0;
+        DataBank dataBank = new DataBank(scheduleReader, forecastReader, productivityTargetUserInput);
+        ReportWriter reportWriter = new ReportWriter(report, dataBank);
+        //When
+        reportWriter.writeStoreSheet();
+        reportWriter.writeAllDepartmentsSheets();
+
+        report.write(new FileOutputStream("TestResults/376November.xlsx"));
+        report.close();
+        File checkFile = new File("TestResults/376November.xlsx");
 
         //Then
         Assert.assertTrue(checkFile.exists());
