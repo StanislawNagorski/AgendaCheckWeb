@@ -5,10 +5,8 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 
 public class ForecastReader {
@@ -101,16 +99,23 @@ public class ForecastReader {
     private boolean isItRetailDepartmentSheetCheck(XSSFSheet sheet, int monthToCheckIfThereIsTurnOver) {
         int columnToCheck = calculateMonthColumnNr(monthToCheckIfThereIsTurnOver);
 
-        if (sheet.getRow(2).getLastCellNum() < columnToCheck) {
+        if (checkIfDepartmentNameIsNonRetail(sheet.getSheetName())){
+            System.out.printf("Czy sektor %s jest działem hanlowym?: FALSE \n",sheet.getSheetName());
             return false;
         }
 
-        boolean isItForecastCell;
+        short lastCellNum = sheet.getRow(2).getLastCellNum();
+        boolean tableIsNotLongEnoughToCheckThisMonth = lastCellNum < columnToCheck;
+        if (tableIsNotLongEnoughToCheckThisMonth) {
+            return false;
+        }
+
         XSSFCell cellShouldBeString = sheet.getRow(2).getCell(0);
         if (cellShouldBeString == null){
             return false;
         }
 
+        boolean isItForecastCell;
         String desiredString = "Obrót 2020 PILOTAŻ";
         if (cellShouldBeString.getCellType().equals(CellType.STRING)) {
             isItForecastCell = cellShouldBeString.getStringCellValue().equalsIgnoreCase(desiredString);
@@ -131,8 +136,20 @@ public class ForecastReader {
         } else {
             isThereTurnover = false;
         }
+        System.out.printf("Czy sektor %s jest działem hanlowym?: %b \n",sheet.getSheetName(), isItForecastCell && isThereTurnover);
+
 
         return isItForecastCell && isThereTurnover;
+    }
+
+    private boolean checkIfDepartmentNameIsNonRetail(String sheetName) {
+        List<String> popularNoneRetailNames = List.of("kas","pok","wykre","admin","nieobecno", "kierowni", "kadr");
+        for (String noneRetailName : popularNoneRetailNames) {
+            if (sheetName.toLowerCase().contains(noneRetailName)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public Map<String, Double> createDepartmentsMonthlyTurnOverMap(int monthNumber) {
