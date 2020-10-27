@@ -105,9 +105,13 @@ public class ForecastReader {
             return false;
         }
 
-        String desiredString = "Obrót 2020 PILOTAŻ";
         boolean isItForecastCell;
         XSSFCell cellShouldBeString = sheet.getRow(2).getCell(0);
+        if (cellShouldBeString == null){
+            return false;
+        }
+
+        String desiredString = "Obrót 2020 PILOTAŻ";
         if (cellShouldBeString.getCellType().equals(CellType.STRING)) {
             isItForecastCell = cellShouldBeString.getStringCellValue().equalsIgnoreCase(desiredString);
         } else {
@@ -116,6 +120,9 @@ public class ForecastReader {
 
         boolean isThereTurnover;
         XSSFCell cellNumericValueShouldBeGreaterThen0 = sheet.getRow(2).getCell(columnToCheck);
+        if (cellNumericValueShouldBeGreaterThen0 == null){
+            return false;
+        }
         if (cellNumericValueShouldBeGreaterThen0.getCellType().equals(CellType.NUMERIC)) {
             isThereTurnover = cellNumericValueShouldBeGreaterThen0.getNumericCellValue() > 0;
         } else if (cellNumericValueShouldBeGreaterThen0.getCellType().equals(CellType.FORMULA)) {
