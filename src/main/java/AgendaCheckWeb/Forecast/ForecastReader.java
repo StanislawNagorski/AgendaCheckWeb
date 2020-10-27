@@ -100,7 +100,6 @@ public class ForecastReader {
         int columnToCheck = calculateMonthColumnNr(monthToCheckIfThereIsTurnOver);
 
         if (checkIfDepartmentNameIsNonRetail(sheet.getSheetName())){
-            System.out.printf("Czy sektor %s jest działem hanlowym?: FALSE \n",sheet.getSheetName());
             return false;
         }
 
@@ -136,8 +135,6 @@ public class ForecastReader {
         } else {
             isThereTurnover = false;
         }
-        System.out.printf("Czy sektor %s jest działem hanlowym?: %b \n",sheet.getSheetName(), isItForecastCell && isThereTurnover);
-
 
         return isItForecastCell && isThereTurnover;
     }
