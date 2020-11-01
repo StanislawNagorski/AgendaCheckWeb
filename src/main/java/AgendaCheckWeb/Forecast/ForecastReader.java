@@ -99,6 +99,12 @@ public class ForecastReader {
     private boolean isItRetailDepartmentSheetCheck(XSSFSheet sheet, int monthToCheckIfThereIsTurnOver) {
         int columnToCheck = calculateMonthColumnNr(monthToCheckIfThereIsTurnOver);
 
+        int numberOfRowsInSheet = sheet.getLastRowNum();
+        boolean isSheetEmpty = numberOfRowsInSheet < 0;
+        if (isSheetEmpty){
+            return false;
+        }
+
         if (checkIfDepartmentNameIsNonRetail(sheet.getSheetName())){
             return false;
         }
