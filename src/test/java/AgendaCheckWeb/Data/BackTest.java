@@ -178,4 +178,36 @@ public class BackTest {
         Assert.assertTrue(checkFile.exists());
 
     }
+
+    @Test
+    public void shouldCreateReportForStore272ForNovember() throws IOException, InvalidFormatException {
+
+        //Given
+        OPCPackage scheduleInput = OPCPackage.open(new File("SampleInput/targo/sumDivisionReport_20201031_194523.xlsx"));
+        XSSFWorkbook schedule = new XSSFWorkbook(scheduleInput);
+        scheduleInput.close();
+
+        OPCPackage forecastInput = OPCPackage.open(new File("SampleInput/targo/272 Gessef 2020.xlsx"));
+        XSSFWorkbook forecast = new XSSFWorkbook(forecastInput);
+        forecastInput.close();
+
+        XSSFWorkbook report = new XSSFWorkbook();
+
+        ScheduleReader scheduleReader = new ScheduleReader(schedule);
+        ForecastReader forecastReader = new ForecastReader(forecast);
+        double productivityTargetUserInput = 800.0;
+        DataBank dataBank = new DataBank(scheduleReader, forecastReader, productivityTargetUserInput);
+        ReportWriter reportWriter = new ReportWriter(report, dataBank);
+        //When
+        reportWriter.writeStoreSheet();
+        reportWriter.writeAllDepartmentsSheets();
+
+        report.write(new FileOutputStream("TestResults/272November.xlsx"));
+        report.close();
+        File checkFile = new File("TestResults/272November.xlsx");
+
+        //Then
+        Assert.assertTrue(checkFile.exists());
+
+    }
 }
