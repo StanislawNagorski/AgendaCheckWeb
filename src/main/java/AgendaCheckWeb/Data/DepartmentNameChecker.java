@@ -51,6 +51,11 @@ public class DepartmentNameChecker {
             return true;
         }
 
+        String[] pair10 = {"pływanie", "woda"};
+        if (commonPairCheck(pair10, name1, name2)) {
+            return true;
+        }
+
         return false;
     }
 
