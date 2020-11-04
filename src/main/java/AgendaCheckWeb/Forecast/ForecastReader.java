@@ -121,9 +121,13 @@ public class ForecastReader {
         }
 
         boolean isItForecastCell;
-        String desiredString = "Obrót 2020 PILOTAŻ";
+
+        String cellShouldContain = "Obrót";
+        String cellShouldAlsoContain = "2020";
+
         if (cellShouldBeString.getCellType().equals(CellType.STRING)) {
-            isItForecastCell = cellShouldBeString.getStringCellValue().equalsIgnoreCase(desiredString);
+            String stringCellValue = cellShouldBeString.getStringCellValue();
+            isItForecastCell = stringCellValue.contains(cellShouldContain) && stringCellValue.contains(cellShouldAlsoContain);
         } else {
             isItForecastCell = false;
         }
