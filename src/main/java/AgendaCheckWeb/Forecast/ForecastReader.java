@@ -13,6 +13,7 @@ public class ForecastReader {
 
     private final XSSFWorkbook forecast;
     private int numberOFDepartmentSheets = 0;
+    private DepartmentTypeChecker typeChecker;
 
 
     public ForecastReader(XSSFWorkbook forecast) {
@@ -96,69 +97,6 @@ public class ForecastReader {
         return monthNumber + (monthNumber - 1);
     }
 
-    private boolean isItRetailDepartmentSheetCheck(XSSFSheet sheet, int monthToCheckIfThereIsTurnOver) {
-        int columnToCheck = calculateMonthColumnNr(monthToCheckIfThereIsTurnOver);
-
-        int numberOfRowsInSheet = sheet.getLastRowNum();
-        boolean isSheetEmpty = numberOfRowsInSheet < 0;
-        if (isSheetEmpty){
-            return false;
-        }
-
-        if (checkIfDepartmentNameIsNonRetail(sheet.getSheetName())){
-            return false;
-        }
-
-        short lastCellNum = sheet.getRow(2).getLastCellNum();
-        boolean tableIsNotLongEnoughToCheckThisMonth = lastCellNum < columnToCheck;
-        if (tableIsNotLongEnoughToCheckThisMonth) {
-            return false;
-        }
-
-        XSSFCell cellShouldBeString = sheet.getRow(2).getCell(0);
-        if (cellShouldBeString == null){
-            return false;
-        }
-
-        boolean isItForecastCell;
-
-        String cellShouldContain = "Obrót";
-        String cellShouldAlsoContain = "2020";
-
-        if (cellShouldBeString.getCellType().equals(CellType.STRING)) {
-            String stringCellValue = cellShouldBeString.getStringCellValue();
-            isItForecastCell = stringCellValue.contains(cellShouldContain) && stringCellValue.contains(cellShouldAlsoContain);
-        } else {
-            isItForecastCell = false;
-        }
-
-        boolean isThereTurnover;
-        XSSFCell cellNumericValueShouldBeGreaterThen0 = sheet.getRow(2).getCell(columnToCheck);
-        if (cellNumericValueShouldBeGreaterThen0 == null){
-            return false;
-        }
-        if (cellNumericValueShouldBeGreaterThen0.getCellType().equals(CellType.NUMERIC)) {
-            isThereTurnover = cellNumericValueShouldBeGreaterThen0.getNumericCellValue() > 0;
-        } else if (cellNumericValueShouldBeGreaterThen0.getCellType().equals(CellType.FORMULA)) {
-            double rawValue = Double.parseDouble(cellNumericValueShouldBeGreaterThen0.getRawValue());
-            isThereTurnover = rawValue > 0;
-        } else {
-            isThereTurnover = false;
-        }
-
-        return isItForecastCell && isThereTurnover;
-    }
-
-    private boolean checkIfDepartmentNameIsNonRetail(String sheetName) {
-        List<String> popularNoneRetailNames = List.of("kas","pok","wykre","admin","nieobecno", "kierowni", "kadr");
-        for (String noneRetailName : popularNoneRetailNames) {
-            if (sheetName.toLowerCase().contains(noneRetailName)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Map<String, Double> createDepartmentsMonthlyTurnOverMap(int monthNumber) {
         Map<String, Double> monthlyTurnOverByDepartment = new LinkedHashMap<>();
 
@@ -166,10 +104,12 @@ public class ForecastReader {
         int monthColumnNr = calculateMonthColumnNr(monthNumber);
         int rowNr = 2;
 
+
         for (int i = 0; i < numberOfSheets; i++) {
             XSSFSheet forecastSheet = forecast.getSheetAt(i);
+            typeChecker = new DepartmentTypeChecker(forecastSheet, monthColumnNr);
 
-            if (isItRetailDepartmentSheetCheck(forecastSheet, monthNumber)) {
+            if (typeChecker.isRetailDepartment()) {
                 String departmentName = forecastSheet.getSheetName();
                 XSSFCell cell = forecastSheet.getRow(rowNr).getCell(monthColumnNr);
                 double departmentForecastedTurnOver;
