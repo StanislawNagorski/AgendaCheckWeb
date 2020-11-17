@@ -261,6 +261,7 @@ public class ReportWriter {
         for (String departmentName : departmentNames) {
 
             if (!hours.containsKey(departmentName)) {
+                System.out.println("odrzucono: " + departmentName);
                 continue;
             }
 

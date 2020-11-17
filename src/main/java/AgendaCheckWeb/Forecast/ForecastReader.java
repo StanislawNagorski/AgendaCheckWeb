@@ -5,9 +5,13 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import java.util.*;
-import static AgendaCheckWeb.Forecast.ForecastUtils.*;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import static AgendaCheckWeb.Forecast.ForecastUtils.*;
 
 public class ForecastReader {
 
@@ -54,6 +58,7 @@ public class ForecastReader {
                         cachedFormulaResultType = dailyTurnoverCell.getCachedFormulaResultType();
                     } catch (IllegalStateException e) {
                         System.out.println("Row" + dailyTurnoverCell.getRowIndex());
+
                         e.printStackTrace();
                     }
 
@@ -99,6 +104,8 @@ public class ForecastReader {
         for (int i = 0; i < numberOfSheets; i++) {
             XSSFSheet forecastSheet = forecast.getSheetAt(i);
             typeChecker = new DepartmentTypeChecker(forecastSheet, monthColumnNr);
+
+            System.out.println(typeChecker.isRetailDepartment() + " : " +forecastSheet.getSheetName());
 
             if (typeChecker.isRetailDepartment()) {
                 XSSFCell cell = forecastSheet.getRow(DEPARTMENT_TURNOVER_ROW).getCell(monthColumnNr);
