@@ -42,6 +42,10 @@ public class DepartmentTypeChecker {
             return false;
         }
 
+        if (sheet.getRow(DEPARTMENT_TURNOVER_ROW) == null){
+            return false;
+        }
+
         short lastCellNum = sheet.getRow(DEPARTMENT_TURNOVER_ROW).getLastCellNum();
         boolean tableIsNotLongEnoughToCheckThisMonth = lastCellNum < columnToCheck;
         if (tableIsNotLongEnoughToCheckThisMonth) {
