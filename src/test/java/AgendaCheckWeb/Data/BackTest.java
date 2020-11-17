@@ -210,4 +210,68 @@ public class BackTest {
         Assert.assertTrue(checkFile.exists());
 
     }
+
+    @Test
+    public void shouldCreateReportForStore527() throws IOException, InvalidFormatException {
+
+        //Given
+        OPCPackage scheduleInput = OPCPackage.open(new File("SampleInput/527/sumDivisionReport_20201112_132811.xlsx"));
+        XSSFWorkbook schedule = new XSSFWorkbook(scheduleInput);
+        scheduleInput.close();
+
+        OPCPackage forecastInput = OPCPackage.open(new File("SampleInput/527/527 Gessef 2020  6 STREF.xlsx"));
+        XSSFWorkbook forecast = new XSSFWorkbook(forecastInput);
+        forecastInput.close();
+
+        XSSFWorkbook report = new XSSFWorkbook();
+
+        ScheduleReader scheduleReader = new ScheduleReader(schedule);
+        ForecastReader forecastReader = new ForecastReader(forecast);
+        double productivityTargetUserInput = 800.0;
+        DataBank dataBank = new DataBank(scheduleReader, forecastReader, productivityTargetUserInput);
+        ReportWriter reportWriter = new ReportWriter(report, dataBank);
+        //When
+        reportWriter.writeStoreSheet();
+        reportWriter.writeAllDepartmentsSheets();
+
+        report.write(new FileOutputStream("TestResults/527.xlsx"));
+        report.close();
+        File checkFile = new File("TestResults/527.xlsx");
+
+        //Then
+        Assert.assertTrue(checkFile.exists());
+
+    }
+
+    @Test
+    public void shouldCreateReportForStore830() throws IOException, InvalidFormatException {
+
+        //Given
+        OPCPackage scheduleInput = OPCPackage.open(new File("SampleInput/830/sumDivisionReport_20201112_132059.xlsx"));
+        XSSFWorkbook schedule = new XSSFWorkbook(scheduleInput);
+        scheduleInput.close();
+
+        OPCPackage forecastInput = OPCPackage.open(new File("SampleInput/830/830 Gessef 2020.xlsx"));
+        XSSFWorkbook forecast = new XSSFWorkbook(forecastInput);
+        forecastInput.close();
+
+        XSSFWorkbook report = new XSSFWorkbook();
+
+        ScheduleReader scheduleReader = new ScheduleReader(schedule);
+        ForecastReader forecastReader = new ForecastReader(forecast);
+        double productivityTargetUserInput = 800.0;
+        DataBank dataBank = new DataBank(scheduleReader, forecastReader, productivityTargetUserInput);
+        ReportWriter reportWriter = new ReportWriter(report, dataBank);
+        //When
+        reportWriter.writeStoreSheet();
+        reportWriter.writeAllDepartmentsSheets();
+
+        report.write(new FileOutputStream("TestResults/830.xlsx"));
+        report.close();
+        File checkFile = new File("TestResults/830.xlsx");
+
+        //Then
+        Assert.assertTrue(checkFile.exists());
+
+    }
 }

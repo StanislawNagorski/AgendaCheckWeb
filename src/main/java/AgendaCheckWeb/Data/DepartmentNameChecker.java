@@ -7,6 +7,8 @@ import java.util.Set;
 
 public class DepartmentNameChecker {
 
+
+
     private static boolean commonPairCheck(String[] namePair, String name1, String name2) {
         boolean pair1A = name1.toLowerCase().contains(namePair[0]) || name1.toLowerCase().contains(namePair[1]);
         boolean pair1B = name2.toLowerCase().contains(namePair[0]) || name2.toLowerCase().contains(namePair[1]);
@@ -68,12 +70,15 @@ public class DepartmentNameChecker {
         if (commonNamesReplacements(forecastName, scheduleName)) {
             return true;
         }
+        String scheduleNameLower = scheduleName.toLowerCase();
 
-        String[] splitedScheduleName = scheduleName.split("(\\s|\\/)");
+        String[] splitedScheduleName = scheduleNameLower.split("(\\s|\\/|sporty)");
         for (String s : splitedScheduleName) {
             if (s.equals("")) {
                 continue;
             }
+
+
 
             if (forecastName.toLowerCase().contains(s.toLowerCase())) {
                 return true;
@@ -94,6 +99,9 @@ public class DepartmentNameChecker {
             for (Map.Entry<String, List<Double>> hoursEntry : hoursSet) {
 
                 boolean isNameMatching = namesCheck(turnoverEntry.getKey(), hoursEntry.getKey());
+
+                System.out.printf("is name matching: %s with %s ? : %b \n", turnoverEntry.getKey(), hoursEntry.getKey(), isNameMatching );
+
                 if (isNameMatching) {
                     String keyToChange = hoursEntry.getKey();
                     String keyNew = turnoverEntry.getKey();
