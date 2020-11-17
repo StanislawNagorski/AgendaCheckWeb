@@ -44,7 +44,7 @@
                 <p>
                     <label>
                         <span class="form__element" id="planQTxt"> Plik raportu z planQ:</span>
-                        <input class="form__label" type="file" name="planQ" accept="image/*" required>
+                        <input class="form__label" type="file" name="planQ" accept=".xlsx" required>
                     </label>
                 </p>
                 <p>
